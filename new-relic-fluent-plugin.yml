@@ -1,0 +1,59 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: fluent-bit
+  namespace: default
+  labels:
+    k8s-app: fluent-bit-logging
+    version: v1
+    kubernetes.io/cluster-service: "true"
+    name: fluent-bit-logging
+spec:
+  selector:
+    matchLabels:
+      name: fluent-bit-logging
+  template:
+    metadata:
+      labels:
+        k8s-app: fluent-bit-logging
+        version: v1
+        kubernetes.io/cluster-service: "true"
+        name: fluent-bit-logging
+    spec:
+      containers:
+      - name: fluent-bit
+        env:
+          - name: API_KEY
+            value: <YOUR_INSIGHTS_INSERT_KEY>
+          - name: BUFFER_SIZE
+            value: "256000"
+          - name: MAX_RECORDS
+            value: "2"
+        image: quay.io/newrelic/fluent-bit-output
+        command:
+          - /fluent-bit/bin/fluent-bit
+          - -c
+          - /fluent-bit/etc/fluent-bit.conf
+          - -e
+          - /fluent-bit/bin/out_newrelic.so
+        resources:
+          limits:
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        volumeMounts:
+        - name: config
+          mountPath: /fluent-bit/etc
+        - name: varlog
+          mountPath: /var/log/
+      imagePullSecrets:
+      - name: regcred
+      terminationGracePeriodSeconds: 10
+      volumes:
+      - name: config
+        configMap:
+          name: fluent-bit-config
+      - name: varlog
+        hostPath:
+          path: /var/log/
