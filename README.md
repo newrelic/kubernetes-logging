@@ -11,7 +11,7 @@ Welcome to the New Relic Fluent Bit Output Plugin for Kubernetes! There are only
 
 To learn about more ways to log in, check out [this documentation](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/). Make sure to name your secret `regcred` though.
 
-4. Once that's all ready, run `kubectl apply -f fluent-conf.yml -f new-relic-fluent-plugin.yml` on your cluster. Then check Insights for your logs!
+4. Once that's all ready, run `kubectl apply -f fluent-conf.yml -f new-relic-fluent-plugin.yml` on your cluster. Then check Insights for your logs by running `SELECT * FROM log`!
 
 
 Latest image version: 0.0.17
