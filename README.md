@@ -13,8 +13,9 @@ To learn about more ways to log in, check out [this documentation](https://kuber
 
 4. Once that's all ready, run `kubectl apply -f fluent-conf.yml -f new-relic-fluent-plugin.yml` on your cluster. Then check Insights for your logs by running `SELECT * FROM log`!
 
+We default to tailing `/var/log/containers/*.log`. If you want to change what's tailed, just update the path on line 28 of `fluent-conf.yml`.
 
-Latest image version: 0.0.17
+Latest image version: 0.0.19
 
 We currently support parsing json and docker logs. If you want more parsing, feel free to add more parsers in `fluent-conf.yml`.
 
