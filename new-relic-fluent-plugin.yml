@@ -29,7 +29,7 @@ spec:
             value: "256000"
           - name: MAX_RECORDS
             value: "2"
-        image: quay.io/newrelic/fluent-bit-output
+        image: quay.io/newrelic/fluent-bit-output:0.0.19
         command:
           - /fluent-bit/bin/fluent-bit
           - -c
@@ -38,10 +38,11 @@ spec:
           - /fluent-bit/bin/out_newrelic.so
         resources:
           limits:
-            memory: 100Mi
+            cpu: 500m
+            memory: 128Mi
           requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 250m
+            memory: 64Mi
         volumeMounts:
         - name: config
           mountPath: /fluent-bit/etc
