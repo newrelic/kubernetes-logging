@@ -20,6 +20,7 @@ spec:
         kubernetes.io/cluster-service: "true"
         name: fluent-bit-logging
     spec:
+      serviceAccountName: fluent-bit
       containers:
       - name: fluent-bit
         env:
@@ -29,7 +30,7 @@ spec:
             value: "256000"
           - name: MAX_RECORDS
             value: "2"
-        image: quay.io/newrelic/fluent-bit-output:0.0.19
+        image: quay.io/newrelic/fluent-bit-output:0.0.23
         command:
           - /fluent-bit/bin/fluent-bit
           - -c

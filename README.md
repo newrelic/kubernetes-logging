@@ -3,7 +3,7 @@
 Welcome to the New Relic Fluent Bit Output Plugin for Kubernetes! There are only a few quick steps to getting this working in your cluster.
 
 1. Pull down this repo
-2. On line 27 of `new-relic-fluent-plugin.yml`, input your own New Relic Insights Insert key. Instructions on how to get your New Relic Insights Insert key can be found [here](https://docs.newrelic.com/docs/insights/insights-data-sources/custom-data/send-custom-events-event-api).
+2. On line 28 of `new-relic-fluent-plugin.yml`, input your own New Relic Insights Insert key. Instructions on how to get your New Relic Insights Insert key can be found [here](https://docs.newrelic.com/docs/insights/insights-data-sources/custom-data/send-custom-events-event-api).
 3. Log into quay.io on your cluster. We think that this way is easiest:
   ```
     kubectl create secret docker-registry regcred --docker-server=quay.io --docker-username=<your-quay.io-username> --docker-password=<your-quay.io-pword> --docker-email=<your-quay.io-email>
@@ -15,7 +15,7 @@ To learn about more ways to log in, check out [this documentation](https://kuber
 
 We default to tailing `/var/log/containers/*.log`. If you want to change what's tailed, just update the path on line 28 of `fluent-conf.yml`.
 
-Latest image version: 0.0.19
+Latest image version: 0.0.23
 
 We currently support parsing json and docker logs. If you want more parsing, feel free to add more parsers in `fluent-conf.yml`.
 
