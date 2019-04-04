@@ -48,7 +48,7 @@ spec:
         - name: config
           mountPath: /fluent-bit/etc
         - name: varlog
-          mountPath: /var/log/
+          mountPath: /var
       imagePullSecrets:
       - name: regcred
       terminationGracePeriodSeconds: 10
@@ -58,4 +58,4 @@ spec:
           name: fluent-bit-config
       - name: varlog
         hostPath:
-          path: /var/log/
+          path: /var
