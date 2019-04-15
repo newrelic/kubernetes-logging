@@ -49,6 +49,9 @@ spec:
           mountPath: /fluent-bit/etc
         - name: varlog
           mountPath: /var
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
       imagePullSecrets:
       - name: regcred
       terminationGracePeriodSeconds: 10
@@ -58,4 +61,12 @@ spec:
           name: fluent-bit-config
       - name: varlog
         hostPath:
-          path: /var
+          path: /var/log
+      - name: varlibdockercontainers
+        hostPath:
+          path: /var/lib/docker/containers
+      tolerations:
+        - operator: "Exists"
+          effect: "NoSchedule"
+        - operator: "Exists"
+          effect: "NoExecute"

@@ -26,7 +26,7 @@ data:
     [INPUT]
         Name              tail
         Tag               kube.*
-        Path              /var/log/containers/{*.log}
+        Path              /var/log/containers/*{.log}
         Parser            docker
         DB                /var/log/flb_kube.db
         Mem_Buf_Limit     7MB
