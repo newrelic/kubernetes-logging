@@ -15,8 +15,6 @@ To learn about more ways to log in, check out [this documentation](https://kuber
 
 We default to tailing `/var/log/containers/*.log`. If you want to change what's tailed, just update the path on line 28 of `fluent-conf.yml`.
 
-Latest image version: 0.0.23
-
 We currently support parsing json and docker logs. If you want more parsing, feel free to add more parsers in `fluent-conf.yml`.
 
 Here are some parsers for your parsing pleasure. 
