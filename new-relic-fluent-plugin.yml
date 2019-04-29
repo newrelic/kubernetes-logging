@@ -30,7 +30,7 @@ spec:
             value: "256000"
           - name: MAX_RECORDS
             value: "2"
-        image: quay.io/newrelic/fluent-bit-output:0.0.25
+        image: quay.io/newrelic/fluent-bit-output:0.0.27
         command:
           - /fluent-bit/bin/fluent-bit
           - -c
