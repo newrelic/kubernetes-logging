@@ -24,13 +24,15 @@ spec:
       containers:
       - name: fluent-bit
         env:
+          - name: SOURCE
+            value: "kubernetes"
           - name: API_KEY
             value: <YOUR_INSIGHTS_INSERT_KEY>
           - name: BUFFER_SIZE
             value: "256000"
           - name: MAX_RECORDS
             value: "2"
-        image: quay.io/newrelic/fluent-bit-output:0.0.27
+        image: quay.io/newrelic/fluent-bit-output:0.0.28
         command:
           - /fluent-bit/bin/fluent-bit
           - -c
