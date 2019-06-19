@@ -30,7 +30,7 @@ spec:
             value: "256000"
           - name: MAX_RECORDS
             value: "2"
-        image: quay.io/newrelic/fluent-bit-output:0.0.23
+        image: newrelic/newrelic-fluentbit-output:0.0.29
         command:
           - /fluent-bit/bin/fluent-bit
           - -c
@@ -49,8 +49,6 @@ spec:
           mountPath: /fluent-bit/etc
         - name: varlog
           mountPath: /var
-      imagePullSecrets:
-      - name: regcred
       terminationGracePeriodSeconds: 10
       volumes:
       - name: config
