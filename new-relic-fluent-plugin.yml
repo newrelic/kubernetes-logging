@@ -24,6 +24,8 @@ spec:
       containers:
       - name: fluent-bit
         env:
+          - name: SOURCE
+            value: "kubernetes"
           - name: API_KEY
             value: <YOUR_INSIGHTS_INSERT_KEY>
           - name: BUFFER_SIZE
