@@ -11,7 +11,7 @@ data:
   fluent-bit.conf: |
     [SERVICE]
         Flush         1
-        Log_Level     info
+        Log_Level     ${LOG_LEVEL:-info}
         Daemon        off
         Parsers_File  parsers.conf
         HTTP_Server   On
@@ -26,7 +26,7 @@ data:
     [INPUT]
         Name              tail
         Tag               kube.*
-        Path              /var/log/containers/*{.log}
+        Path              ${PATH:-/var/log/containers/*.log}
         Parser            docker
         DB                /var/log/flb_kube.db
         Mem_Buf_Limit     7MB

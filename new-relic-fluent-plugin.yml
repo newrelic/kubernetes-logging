@@ -31,7 +31,11 @@ spec:
           - name: BUFFER_SIZE
             value: "256000"
           - name: MAX_RECORDS
-            value: "2"
+            value: "500"
+          - name LOG_LEVEL
+            value "info"
+          - name PATH
+            value "/var/log/containers/*.log"
         image: newrelic/newrelic-fluentbit-output:0.0.29
         command:
           - /fluent-bit/bin/fluent-bit
