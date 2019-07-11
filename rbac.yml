@@ -9,7 +9,7 @@ roleRef:
   name: fluent-bit-read
 subjects:
 - kind: ServiceAccount
-  name: fluent-bit
+  name: newrelic-logging
   namespace: default
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -26,6 +26,6 @@ rules:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: fluent-bit
+  name: newrelic-logging
   namespace: default
 automountServiceAccountToken: true

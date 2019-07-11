@@ -4,7 +4,7 @@ metadata:
   name: fluent-bit-config
   namespace: default
   labels:
-    k8s-app: fluent-bit
+    k8s-app: newrelic-logging
 data:
   # Configuration files: server, input, filters and output
   # ======================================================

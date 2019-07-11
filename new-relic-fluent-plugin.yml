@@ -1,28 +1,28 @@
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
-  name: fluent-bit
+  name: newrelic-logging
   namespace: default
   labels:
-    k8s-app: fluent-bit-logging
+    k8s-app: newrelic-logging
     version: v1
     kubernetes.io/cluster-service: "true"
-    name: fluent-bit-logging
+    name: newrelic-logging
 spec:
   selector:
     matchLabels:
-      name: fluent-bit-logging
+      name: newrelic-logging
   template:
     metadata:
       labels:
-        k8s-app: fluent-bit-logging
+        k8s-app: newrelic-logging
         version: v1
         kubernetes.io/cluster-service: "true"
-        name: fluent-bit-logging
+        name: newrelic-logging
     spec:
-      serviceAccountName: fluent-bit
+      serviceAccountName: newrelic-logging
       containers:
-      - name: fluent-bit
+      - name: newrelic-logging
         env:
           - name: SOURCE
             value: "kubernetes"
