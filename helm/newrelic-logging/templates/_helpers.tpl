@@ -53,3 +53,58 @@ Create the name of the fluent bit config
 {{- define "newrelic.fluentBitConfig" -}}
 {{ template "newrelic.fullname" . }}-fluent-bit-config
 {{- end -}}
+
+{{/*
+Return the licenseKey
+*/}}
+{{- define "newrelic.licenseKey" -}}
+{{- if .Values.global}}
+  {{- if .Values.global.licenseKey }}
+      {{- .Values.global.licenseKey -}}
+  {{- else -}}
+      {{- .Values.licenseKey | default "" -}}
+  {{- end -}}
+{{- else -}}
+    {{- .Values.licenseKey | default "" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the customSecretName
+*/}}
+{{- define "newrelic.customSecretName" -}}
+{{- if .Values.global }}
+  {{- if .Values.global.customSecretName }}
+      {{- .Values.global.customSecretName -}}
+  {{- else -}}
+      {{- .Values.customSecretName | default "" -}}
+  {{- end -}}
+{{- else -}}
+    {{- .Values.customSecretName | default "" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the customSecretKey
+*/}}
+{{- define "newrelic.customSecretKey" -}}
+{{- if .Values.global }}
+  {{- if .Values.global.customSecretKey }}
+      {{- .Values.global.customSecretKey -}}
+  {{- else -}}
+      {{- .Values.customSecretKey | default "" -}}
+  {{- end -}}
+{{- else -}}
+    {{- .Values.customSecretKey | default "" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Returns if the template should render, it checks if the required values are set.
+*/}}
+{{- define "newrelic.areValuesValid" -}}
+{{- $licenseKey := include "newrelic.licenseKey" . -}}
+{{- $customSecretName := include "newrelic.customSecretName" . -}}
+{{- $customSecretKey := include "newrelic.customSecretKey" . -}}
+{{- and (or $licenseKey (and $customSecretName $customSecretKey))}}
+{{- end -}}

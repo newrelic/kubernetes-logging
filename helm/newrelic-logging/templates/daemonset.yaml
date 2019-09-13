@@ -1,4 +1,4 @@
-{{ if or .Values.licenseKey (and .Values.customSecretName .Values.customSecretKey) }}
+{{- if (include "newrelic.areValuesValid" .) }}
 apiVersion: apps/v1beta2
 kind: DaemonSet
 metadata:
@@ -27,11 +27,11 @@ spec:
       serviceAccountName: {{ template "newrelic.serviceAccountName" . }}
       hostNetwork: true # This option is a requirement for the Infrastructure Agent to report the proper hostname in New Relic.
       dnsPolicy: ClusterFirstWithHostNet
+      terminationGracePeriodSeconds: 10
       containers:
         - name: {{ template "newrelic.name" . }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: "{{ .Values.image.pullPolicy }}"
-          terminationGracePeriodSeconds: 10
           env:
             # TODO: extract variables here after you vet that
             # this all works
@@ -42,12 +42,12 @@ spec:
             - name: LICENSE_KEY
               valueFrom:
                 secretKeyRef:
-                  {{- if .Values.licenseKey }}
+                  {{- if (include "newrelic.licenseKey" .) }}
                   name: {{ template "newrelic.fullname" . }}-config
                   key: license
                   {{- else }}
-                  name: {{ .Values.customSecretName }}
-                  key: {{ .Values.customSecretKey }}
+                  name: {{ include "newrelic.customSecretName" . }}
+                  key: {{ include "newrelic.customSecretKey" . }}
                   {{- end }}
             - name: BUFFER_SIZE
               value: {{ .Values.fluentBit.bufferSize | quote }}
