@@ -26,6 +26,7 @@ app: {{ template "newrelic.name" . }}
 chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
 heritage: {{.Release.Service }}
 release: {{.Release.Name }}
+app.kubernetes.io/name: {{ template "newrelic.name" . }}
 {{- end }}
 
 {{/*

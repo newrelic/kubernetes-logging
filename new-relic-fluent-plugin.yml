@@ -8,6 +8,7 @@ metadata:
     version: v1
     kubernetes.io/cluster-service: "true"
     name: newrelic-logging
+    app.kubernetes.io/name: newrelic-logging
 spec:
   selector:
     matchLabels:
@@ -19,6 +20,7 @@ spec:
         version: v1
         kubernetes.io/cluster-service: "true"
         name: newrelic-logging
+        app.kubernetes.io/name: newrelic-logging
     spec:
       serviceAccountName: newrelic-logging
       containers:
