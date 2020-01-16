@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  labels: {{ include "newrelic.labels" . | indent 4 }}
-  name: {{ template "newrelic.fluentBitConfig" . }}
+  labels: {{ include "newrelic-logging.labels" . | indent 4 }}
+  name: {{ template "newrelic-logging.fluentBitConfig" . }}
 data:
   # Configuration files: server, input, filters and output
   # ======================================================
