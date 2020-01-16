@@ -2,7 +2,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "newrelic.name" -}}
+{{- define "newrelic-logging.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
@@ -10,7 +10,7 @@ Expand the name of the chart.
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
-{{- define "newrelic.fullname" -}}
+{{- define "newrelic-logging.fullname" -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- if ne $name .Release.Name -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
@@ -21,27 +21,27 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 
 
 {{/* Generate basic labels */}}
-{{- define "newrelic.labels" }}
-app: {{ template "newrelic.name" . }}
+{{- define "newrelic-logging.labels" }}
+app: {{ template "newrelic-logging.name" . }}
 chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
 heritage: {{.Release.Service }}
 release: {{.Release.Name }}
-app.kubernetes.io/name: {{ template "newrelic.name" . }}
+app.kubernetes.io/name: {{ template "newrelic-logging.name" . }}
 {{- end }}
 
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "newrelic.chart" -}}
+{{- define "newrelic-logging.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "newrelic.serviceAccountName" -}}
+{{- define "newrelic-logging.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
-    {{ default (include "newrelic.fullname" .) .Values.serviceAccount.name }}
+    {{ default (include "newrelic-logging.fullname" .) .Values.serviceAccount.name }}
 {{- else -}}
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
@@ -51,14 +51,14 @@ Create the name of the service account to use
 {{/*
 Create the name of the fluent bit config
 */}}
-{{- define "newrelic.fluentBitConfig" -}}
-{{ template "newrelic.fullname" . }}-fluent-bit-config
+{{- define "newrelic-logging.fluentBitConfig" -}}
+{{ template "newrelic-logging.fullname" . }}-fluent-bit-config
 {{- end -}}
 
 {{/*
 Return the licenseKey
 */}}
-{{- define "newrelic.licenseKey" -}}
+{{- define "newrelic-logging.licenseKey" -}}
 {{- if .Values.global}}
   {{- if .Values.global.licenseKey }}
       {{- .Values.global.licenseKey -}}
@@ -73,7 +73,7 @@ Return the licenseKey
 {{/*
 Return the customSecretName
 */}}
-{{- define "newrelic.customSecretName" -}}
+{{- define "newrelic-logging.customSecretName" -}}
 {{- if .Values.global }}
   {{- if .Values.global.customSecretName }}
       {{- .Values.global.customSecretName -}}
@@ -88,7 +88,7 @@ Return the customSecretName
 {{/*
 Return the customSecretKey
 */}}
-{{- define "newrelic.customSecretKey" -}}
+{{- define "newrelic-logging.customSecretKey" -}}
 {{- if .Values.global }}
   {{- if .Values.global.customSecretKey }}
       {{- .Values.global.customSecretKey -}}
@@ -103,9 +103,9 @@ Return the customSecretKey
 {{/*
 Returns if the template should render, it checks if the required values are set.
 */}}
-{{- define "newrelic.areValuesValid" -}}
-{{- $licenseKey := include "newrelic.licenseKey" . -}}
-{{- $customSecretName := include "newrelic.customSecretName" . -}}
-{{- $customSecretKey := include "newrelic.customSecretKey" . -}}
+{{- define "newrelic-logging.areValuesValid" -}}
+{{- $licenseKey := include "newrelic-logging.licenseKey" . -}}
+{{- $customSecretName := include "newrelic-logging.customSecretName" . -}}
+{{- $customSecretKey := include "newrelic-logging.customSecretKey" . -}}
 {{- and (or $licenseKey (and $customSecretName $customSecretKey))}}
 {{- end -}}
