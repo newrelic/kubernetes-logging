@@ -20,6 +20,7 @@ spec:
       labels:
         app: {{ template "newrelic-logging.name" . }}
         release: {{.Release.Name }}
+        app.kubernetes.io/name: {{ template "newrelic-logging.name" . }}
         {{- if .Values.podLabels}}
         {{ toYaml .Values.podLabels }}
         {{- end }}
