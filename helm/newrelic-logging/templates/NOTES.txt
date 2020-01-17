@@ -1,7 +1,7 @@
-{{- if (include "newrelic-logging.areValuesValid" .) }}
+{{- if (include "newrelic.areValuesValid" .) }}
 Your deployment of the New Relic Kubernetes Logging is complete. You can check on the progress of this by running the following command:
 
-    kubectl get daemonset -o wide -w --namespace {{ .Release.Namespace }} {{ template "newrelic-logging.fullname" . }}
+    kubectl get daemonset -o wide -w --namespace {{ .Release.Namespace }} {{ template "newrelic.fullname" . }}
 {{- else -}}
 ##############################################################################
 ####     ERROR: You did not set a license key.                            ####

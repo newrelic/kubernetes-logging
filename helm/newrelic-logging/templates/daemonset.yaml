@@ -1,15 +1,15 @@
-{{- if (include "newrelic-logging.areValuesValid" .) }}
+{{- if (include "newrelic.areValuesValid" .) }}
 apiVersion: apps/v1beta2
 kind: DaemonSet
 metadata:
-  labels: {{ include "newrelic-logging.labels" . | indent 4 }}
-  name: {{ template "newrelic-logging.fullname" . }}
+  labels: {{ include "newrelic.labels" . | indent 4 }}
+  name: {{ template "newrelic.fullname" . }}
 spec:
   updateStrategy:
     type: {{ .Values.updateStrategy }}
   selector:
     matchLabels:
-      app: {{ template "newrelic-logging.name" . }}
+      app: {{ template "newrelic.name" . }}
       release: {{.Release.Name }}
   template:
     metadata:
@@ -18,24 +18,24 @@ spec:
 {{ toYaml .Values.podAnnotations | indent 8}}
     {{- end }}
       labels:
-        app: {{ template "newrelic-logging.name" . }}
+        app: {{ template "newrelic.name" . }}
         release: {{.Release.Name }}
         app.kubernetes.io/name: {{ template "newrelic-logging.name" . }}
         {{- if .Values.podLabels}}
         {{ toYaml .Values.podLabels }}
         {{- end }}
     spec:
-      serviceAccountName: {{ template "newrelic-logging.serviceAccountName" . }}
+      serviceAccountName: {{ template "newrelic.serviceAccountName" . }}
       hostNetwork: true # This option is a requirement for the Infrastructure Agent to report the proper hostname in New Relic.
       dnsPolicy: ClusterFirstWithHostNet
       terminationGracePeriodSeconds: 10
       containers:
-        - name: {{ template "newrelic-logging.name" . }}
+        - name: {{ template "newrelic.name" . }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           env:
             - name: ENDPOINT
-              {{- if eq (substr 0 2 (include "newrelic-logging.licenseKey" .)) "eu" }}
+              {{- if eq (substr 0 2 (include "newrelic.licenseKey" .)) "eu" }}
               value: "https://log-api.eu.newrelic.com/log/v1"
               {{- else }}
               value: "https://log-api.newrelic.com/log/v1"
@@ -45,12 +45,12 @@ spec:
             - name: LICENSE_KEY
               valueFrom:
                 secretKeyRef:
-                  {{- if (include "newrelic-logging.licenseKey" .) }}
-                  name: {{ template "newrelic-logging.fullname" . }}-config
+                  {{- if (include "newrelic.licenseKey" .) }}
+                  name: {{ template "newrelic.fullname" . }}-config
                   key: license
                   {{- else }}
-                  name: {{ include "newrelic-logging.customSecretName" . }}
-                  key: {{ include "newrelic-logging.customSecretKey" . }}
+                  name: {{ include "newrelic.customSecretName" . }}
+                  key: {{ include "newrelic.customSecretKey" . }}
                   {{- end }}
             - name: BUFFER_SIZE
               value: {{ .Values.fluentBit.bufferSize | quote }}
@@ -78,7 +78,7 @@ spec:
       volumes:
         - name: fluent-bit-config
           configMap:
-            name: {{ template "newrelic-logging.fluentBitConfig" . }}
+            name: {{ template "newrelic.fluentBitConfig" . }}
         - name: var
           hostPath:
             path: /var
