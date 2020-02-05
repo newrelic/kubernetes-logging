@@ -1,5 +1,5 @@
 {{- if (include "newrelic-logging.areValuesValid" .) }}
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   labels: {{ include "newrelic-logging.labels" . | indent 4 }}
@@ -40,8 +40,10 @@ spec:
               {{- else }}
               value: "https://log-api.newrelic.com/log/v1"
               {{- end }}
-            - name: SOURCE
+            - name: REPORTING_SOURCE_TYPE
               value: "kubernetes"
+            - name: REPORTING_SOURCE_VERSION
+              value: {{ .Values.chartVersion | quote }}
             - name: LICENSE_KEY
               valueFrom:
                 secretKeyRef:

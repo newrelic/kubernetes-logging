@@ -3,6 +3,17 @@
 So you want to do development one of these here config files! 
 These instructions are for development on **MacOS**.
 
+## Making changes
+
+* To get a new version of the newrelic-fluentbit-output container, update the version tag of the `image` 
+  field in both these places (the version number should be the same):
+  * `image`: [new-relic-fluent-plugin.yml](new-relic-fluent-plugin.yml)
+  * `image.tag`: [helm/newrelic-logging/values.yaml](helm/newrelic-logging/values.yaml)
+* Make any other changes you need to the `.yml` files
+* Bump the version number of the chart/manifest in both these places (the version number should be the same):
+  * `REPORTING_SOURCE_VERSION`: [new-relic-fluent-plugin.yml](new-relic-fluent-plugin.yml)
+  * `chartVersion`: [helm/newrelic-logging/values.yaml](helm/newrelic-logging/values.yaml)
+
 ## Summary
 
 Here's a summary of what you'll frequently need to do in this repo. More details in sections below.
@@ -40,28 +51,17 @@ See below for more installation instructions
 ### Get minikube started
 
 * Start minikube: `minikube start`
-* Install Tiller onto the minikube cluster: `helm init`
-   * Tiller is a pod that gets deployed into your cluster that allows the `helm` executable to talk to your cluster
+* Start the minikube dashboard (so you can see all your k8s objects in one spot): `minikube dashboard`
 
 ### Deploy test application
 
-* Start the minikube dashboard (so you can see all your k8s objects in one spot): `minikube dashboard`
-* Download and start the `hello-minikube` deployment: `kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.10 --port=8080`
-* Expose the deployment on a known port: `kubectl expose deployment hello-minikube --type=NodePort`
-
-## Making changes
-
-* To get a new version of the newrelic-fluentbit-output container, update the version tag of the `image` 
-  field in:
-  * [new-relic-fluent-plugin.yml]
-  * [helm/newrelic-logging/values.yaml]
-* Make any other changes you need to the `.yml` files
+* Download and start the `hello-minikube` deployment: `kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.4`
+* Expose the deployment on a known port: `kubectl expose deployment hello-node --type=LoadBalancer --port=8080`
 
 ## Testing
 
-* Clean up anything you had running in minikube before
-  * If you deployed this as a Helm chart: `helm delete (release-name)`. Helm gives you a unique release name every time
-    you deploy a chart. It looks like "(unusual-adjective)-(animal-noun)", like `bumptious-seagull`
+* Clean up anything you had running in minikube before (skip this if this is your first time through here)
+  * If you deployed this as a Helm chart: `helm delete test-newrelic-logging`
   * If you deployed the manifests manually:
     * If you just want to replace the DaemonSet: `kubectl delete ds/newrelic-logging`
       * You will almost always just need to do this
@@ -69,7 +69,7 @@ See below for more installation instructions
     instructions above in the "Deploy test application" section
       * You'll only need to do this if something is really wonky and you can't figure out what's wrong
 * Deploy the logging objects (there's two ways to do this, so two things you need to test): 
-  * Deploy Helm chart: `helm install --set licenseKey=(your-license-key) ./helm/newrelic-logging/`
+  * Deploy Helm chart: `helm install test-newrelic-logging ./helm/newrelic-logging/ --set licenseKey=(your-license-key)`
   * Manually deploy manifests: `kubectl apply -f .` (from this repo's root directory)
 * Get the URL of the `hello-minikube` service: `minikube service hello-minikube --url`
 * Hit that URL in your browser (or use `curl`) in order to get it to log something

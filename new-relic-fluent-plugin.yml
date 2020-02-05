@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: newrelic-logging
@@ -28,8 +28,10 @@ spec:
         env:
           - name: ENDPOINT
             value : "https://log-api.newrelic.com/log/v1"
-          - name: SOURCE
+          - name: REPORTING_SOURCE_TYPE
             value: "kubernetes"
+          - name: REPORTING_SOURCE_VERSION
+            value: "1.0.0"
           - name: LICENSE_KEY
             value: <YOUR_LICENSE_KEY>
           - name: BUFFER_SIZE

@@ -13,6 +13,8 @@
 #   customSecretName:
 #   customSecretKey:
 
+chartVersion: 1.0.0
+
 fluentBit:
   bufferSize: "256000"
   maxRecords: "500"
@@ -21,7 +23,7 @@ fluentBit:
 
 image:
   repository: newrelic/newrelic-fluentbit-output
-  tag: 1.1.2
+  tag: 1.1.4
   pullPolicy: IfNotPresent
 
 resources:
