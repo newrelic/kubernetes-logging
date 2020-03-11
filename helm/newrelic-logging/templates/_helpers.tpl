@@ -71,6 +71,21 @@ Return the licenseKey
 {{- end -}}
 
 {{/*
+Return the clusterName
+*/}}
+{{- define "newrelic-logging.clusterName" -}}
+{{- if .Values.global}}
+  {{- if .Values.global.clusterName }}
+      {{- .Values.global.clusterName -}}
+  {{- else -}}
+      {{- .Values.clusterName | default "" -}}
+  {{- end -}}
+{{- else -}}
+    {{- .Values.clusterName | default "" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Return the customSecretName
 */}}
 {{- define "newrelic-logging.customSecretName" -}}

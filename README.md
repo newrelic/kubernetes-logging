@@ -8,7 +8,7 @@ working in your cluster.
 ### Deploying as Helm chart (Recommended)
 
 * Clone this repo
-* Deploy the chart using your New Relic license key: `helm install --set licenseKey=(your-license-key) ./helm/newrelic-logging`
+* Deploy the chart using your New Relic license key: `helm install --set licenseKey=(your-license-key),clusterName=(your-cluster-name) ./helm/newrelic-logging`
 * If you are in the EU, make sure that the license key you are using is an EU key. You will not need to specify the EU 
   logging endpoint -- it will be inferred from the license key
 * Check the Logging product for your logs
