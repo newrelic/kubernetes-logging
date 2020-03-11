@@ -18,6 +18,7 @@ working in your cluster.
 * Clone this repo
 * Configure the plugin. In `new-relic-fluent-plugin.yml`:
   * Specify your New Relic license key in the value for `LICENSE_KEY`
+  * Specify your Kubernetes cluster name in the value for `CLUSTER_NAME`
   * If you are in the EU:
     * Override the `ENDPOINT` environment variable to `https://log-api.eu.newrelic.com/log/v1`
     * Make sure that the license key you are using is an EU key
