@@ -2,7 +2,7 @@
 
 ## Chart Details
 
-This chart will deploy the New Relic Infrastructure agent as a Daemonset.
+This chart will deploy the Fluentbit with the New Relic output plugin as a Daemonset.
 
 ## Configuration
 
