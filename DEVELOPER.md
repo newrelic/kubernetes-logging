@@ -34,27 +34,25 @@ See below for more installation instructions
 ### Initial install
 
 * Install Virtualbox: `brew cask install virtualbox`
-* Install minikube: `brew cask install minikube`
+* Install minikube: `brew install minikube`
 * Install Helm: `brew install kubernetes-helm`
 
 ### Get minikube started
 
 * Start minikube: `minikube start`
-* Install Tiller onto the minikube cluster: `helm init`
-   * Tiller is a pod that gets deployed into your cluster that allows the `helm` executable to talk to your cluster
 
 ### Deploy test application
 
 * Start the minikube dashboard (so you can see all your k8s objects in one spot): `minikube dashboard`
-* Download and start the `hello-minikube` deployment: `kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.10 --port=8080`
-* Expose the deployment on a known port: `kubectl expose deployment hello-minikube --type=NodePort`
+* Download and start the `hello-minikube` deployment: `kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.10`
+* Expose the deployment on a known port: `kubectl expose deployment hello-minikube --type=NodePort --port=8080`
 
 ## Making changes
 
 * To get a new version of the newrelic-fluentbit-output container, update the version tag of the `image` 
   field in:
-  * [new-relic-fluent-plugin.yml]
-  * [helm/newrelic-logging/values.yaml]
+  * [new-relic-fluent-plugin.yml](new-relic-fluent-plugin.yml)
+  * [helm/newrelic-logging/values.yaml](helm/newrelic-logging/values.yaml)
 * Make any other changes you need to the `.yml` files
 
 ## Testing
@@ -69,7 +67,7 @@ See below for more installation instructions
     instructions above in the "Deploy test application" section
       * You'll only need to do this if something is really wonky and you can't figure out what's wrong
 * Deploy the logging objects (there's two ways to do this, so two things you need to test): 
-  * Deploy Helm chart: `helm install --set licenseKey=(your-license-key) ./helm/newrelic-logging/`
+  * Deploy Helm chart: `helm install --set licenseKey=(your-license-key) ./helm/newrelic-logging/ --generate-name`
   * Manually deploy manifests: `kubectl apply -f .` (from this repo's root directory)
 * Get the URL of the `hello-minikube` service: `minikube service hello-minikube --url`
 * Hit that URL in your browser (or use `curl`) in order to get it to log something
