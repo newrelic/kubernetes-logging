@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   labels: {{ include "newrelic-logging.labels" . | indent 4 }}
   name: {{ template "newrelic-logging.fluentBitConfig" . }}
+  namespace: {{ .Release.Namespace }}
 data:
   # Configuration files: server, input, filters and output
   # ======================================================
