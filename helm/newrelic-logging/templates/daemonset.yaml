@@ -35,7 +35,9 @@ spec:
           imagePullPolicy: "{{ .Values.image.pullPolicy }}"
           env:
             - name: ENDPOINT
-              {{- if eq (substr 0 2 (include "newrelic-logging.licenseKey" .)) "eu" }}
+              {{- if .Values.endpoint }}
+              value: {{ .Values.endpoint }}
+              {{- else if eq (substr 0 2 (include "newrelic-logging.licenseKey" .)) "eu" }}
               value: "https://log-api.eu.newrelic.com/log/v1"
               {{- else }}
               value: "https://log-api.newrelic.com/log/v1"
