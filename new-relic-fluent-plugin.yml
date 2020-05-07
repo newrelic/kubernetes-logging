@@ -40,7 +40,7 @@ spec:
             value: "info"
           - name: PATH
             value: "/var/log/containers/*.log"
-        image: newrelic/newrelic-fluentbit-output:1.1.2
+        image: newrelic/newrelic-fluentbit-output:1.2.1
         command:
           - /fluent-bit/bin/fluent-bit
           - -c

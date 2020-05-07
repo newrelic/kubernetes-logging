@@ -21,7 +21,7 @@ fluentBit:
 
 image:
   repository: newrelic/newrelic-fluentbit-output
-  tag: 1.1.2
+  tag: 1.2.1
   pullPolicy: IfNotPresent
 
 resources:
