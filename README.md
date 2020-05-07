@@ -8,7 +8,7 @@ working in your cluster.
 ### Deploying as Helm chart (Recommended)
 
 * Clone this repo
-* Deploy the chart using your [New Relic license key](https://docs.newrelic.com/docs/accounts/install-new-relic/account-setup/license-key): `helm install --set licenseKey=(your-license-key) ./helm/newrelic-logging`
+* Deploy the chart using your [New Relic license key](https://docs.newrelic.com/docs/accounts/install-new-relic/account-setup/license-key): `helm install --set licenseKey=(your-license-key),clusterName=(your-cluster-name) ./helm/newrelic-logging`
 * If you are in the EU, make sure that the license key you are using is an EU key. You will not need to specify the EU 
   logging endpoint -- it will be inferred from the license key
 * Check [New Relic for your logs](https://docs.newrelic.com/docs/logs/new-relic-logs/get-started/introduction-new-relic-logs#find-data)
@@ -18,6 +18,7 @@ working in your cluster.
 * Clone this repo
 * Configure the plugin. In `new-relic-fluent-plugin.yml`:
   * Specify your New Relic license key in the value for `LICENSE_KEY`
+  * Specify your Kubernetes cluster name in the value for `CLUSTER_NAME`
   * If you are in the EU:
     * Override the `ENDPOINT` environment variable to `https://log-api.eu.newrelic.com/log/v1`
     * Make sure that the license key you are using is an EU key
