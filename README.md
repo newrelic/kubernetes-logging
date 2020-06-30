@@ -1,3 +1,6 @@
+# DEPRECATION NOTICE
+This repository has been deprecated. Use https://github.com/newrelic/helm-charts instead.
+
 # New Relic Kubernetes logging
 
 Welcome to the New Relic Fluent Bit output plugin for Kubernetes! There are only a few quick steps to getting this 
